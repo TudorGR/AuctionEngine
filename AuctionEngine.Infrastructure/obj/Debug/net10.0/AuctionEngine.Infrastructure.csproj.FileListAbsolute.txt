@@ -13,3 +13,6 @@
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/refint/AuctionEngine.Infrastructure.dll
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.pdb
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/ref/AuctionEngine.Infrastructure.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/bin/Debug/net10.0/AuctionEngine.Infrastructure.runtimeconfig.json
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.sourcelink.json
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.genruntimeconfig.cache

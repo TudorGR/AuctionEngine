@@ -9,3 +9,4 @@
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/Debug/net10.0/refint/AuctionEngine.Core.dll
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/Debug/net10.0/AuctionEngine.Core.pdb
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/Debug/net10.0/ref/AuctionEngine.Core.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/Debug/net10.0/AuctionEngine.Core.sourcelink.json
