@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="AuctionEngine.API/AuctionEngine.API.csproj" />
+  <Project Path="AuctionEngine.Core/AuctionEngine.Core.csproj" />
+  <Project Path="AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj" />
+  <Project Path="AuctionEngine.Tests/AuctionEngine.Tests.csproj" />
+</Solution>

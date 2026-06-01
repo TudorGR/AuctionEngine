@@ -1,0 +1,15 @@
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/bin/Debug/net10.0/AuctionEngine.Infrastructure.deps.json
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/bin/Debug/net10.0/AuctionEngine.Infrastructure.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/bin/Debug/net10.0/AuctionEngine.Infrastructure.pdb
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/bin/Debug/net10.0/AuctionEngine.Core.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/bin/Debug/net10.0/AuctionEngine.Core.pdb
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.csproj.AssemblyReference.cache
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.AssemblyInfoInputs.cache
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.AssemblyInfo.cs
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionE.4ADCCF25.Up2Date
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/refint/AuctionEngine.Infrastructure.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/AuctionEngine.Infrastructure.pdb
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/Debug/net10.0/ref/AuctionEngine.Infrastructure.dll

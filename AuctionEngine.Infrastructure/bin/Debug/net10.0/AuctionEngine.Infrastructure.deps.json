@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "AuctionEngine.Infrastructure/1.0.0": {
+        "dependencies": {
+          "AuctionEngine.Core": "1.0.0"
+        },
+        "runtime": {
+          "AuctionEngine.Infrastructure.dll": {}
+        }
+      },
+      "AuctionEngine.Core/1.0.0": {
+        "runtime": {
+          "AuctionEngine.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AuctionEngine.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AuctionEngine.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
