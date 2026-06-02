@@ -198,3 +198,12 @@
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/obj/Debug/net10.0/AuctionEngine.Tests.sourcelink.json
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll

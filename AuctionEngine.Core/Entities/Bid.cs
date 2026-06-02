@@ -9,6 +9,6 @@ public class Bid
     public Guid AuctionItemId { get; set; }
     public AuctionItem AuctionItem { get; set; } = null!;
 
-    public Guid BidderId { get; set; }
-    public User Bidder { get; set; } = null!;
+    public string BidderId { get; set; } = string.Empty;
+    public ApplicationUser Bidder { get; set; } = null!;
 }

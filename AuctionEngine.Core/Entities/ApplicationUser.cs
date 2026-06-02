@@ -1,11 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace AuctionEngine.Core.Entities;
 
-public class User
+public class ApplicationUser : IdentityUser
 {
-    public Guid Id { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-
     public ICollection<AuctionItem> CreatedAuctions { get; set; } = new List<AuctionItem>();
     public ICollection<Bid> Bids { get; set; } = new List<Bid>();
 }

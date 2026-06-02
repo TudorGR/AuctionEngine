@@ -1,13 +1,14 @@
 using AuctionEngine.Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuctionEngine.Infrastructure.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
     public DbSet<AuctionItem> AuctionItems { get; set; }
     public DbSet<Bid> Bids { get; set; }
-    public DbSet<User> Users { get; set; }
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     { }
@@ -34,8 +35,8 @@ public class AppDbContext : DbContext
         .HasForeignKey(b => b.AuctionItemId)
         .OnDelete(DeleteBehavior.Cascade);
 
-        // modelBuilder.Entity<AuctionItem>()
-        // .Property(a => a.RowVersion)
-        // .IsRowVersion();
+        modelBuilder.Entity<AuctionItem>()
+        .Property(a => a.CurrentHighestBid)
+        .IsConcurrencyToken();
     }
 }
