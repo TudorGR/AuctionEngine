@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AuctionEngine.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3cb2c773251bf1118a9f785fc39503da8592a56b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5c7a3c21c3e5b7ef2a9f3e7686dde7f3c4ce9510")]
 [assembly: System.Reflection.AssemblyProductAttribute("AuctionEngine.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AuctionEngine.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

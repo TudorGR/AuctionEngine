@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Test Client</title>
+</head>
+<body>
+    <main>
+        <h1>Auction SignalR Test</h1>
+
+        <div>
+            <label for="auctionIdInput">Auction ID (GUID):</label>
+            <input type="text" id="auctionIdInput" placeholder="Enter Auction GUID">
+            <button type="button" onclick="join()" id="joinBtn">Join Auction</button>
+        </div>
+
+        <section aria-labelledby="events-heading">
+            <h3 id="events-heading">Events:</h3>
+            <ul id="events"></ul>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+
+    <script>
+    let connection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/auction")
+        .build();
+
+    connection.start().then(() => {
+        console.log("Connected to SignalR");
+    }).catch(err => console.error("SignalR Connection Error: ", err));
+
+    connection.on("NewBid", function (data) {
+        const li = document.createElement("li");
+        li.innerText = `New bid: ${data.amount} by ${data.bidderId}`;
+        document.getElementById("events").appendChild(li);
+    });
+
+    connection.on("AuctionClosed", function (data) {
+        const li = document.createElement("li");
+
+        li.innerText =
+            `Auction closed | ` +
+            `Winner: ${data.winnerBidderId ?? "no bids"} | ` +
+            `Final bid: ${data.winningBidAmount}`;
+
+        document.getElementById("events").appendChild(li);
+
+        const joinBtn = document.getElementById("joinBtn");
+        if (joinBtn) joinBtn.disabled = true;
+
+        const currentLi = document.createElement("li");
+        currentLi.innerText = `Final highest bid: ${data.winningBidAmount}`;
+        document.getElementById("events").appendChild(currentLi);
+    });
+
+    async function join() {
+    const joinBtn = document.getElementById("joinBtn");
+    const auctionIdInput = document.getElementById("auctionIdInput");
+    
+    // 1. Get and validate the input value
+    const auctionId = auctionIdInput.value.trim();
+    if (!auctionId) {
+        alert("Please enter an Auction ID before joining.");
+        return;
+    }
+
+    try {
+        // 2. IMMEDIATELY disable inputs to prevent double-clicks or mid-stream changes
+        joinBtn.disabled = true;
+        auctionIdInput.disabled = true;
+        joinBtn.innerText = "Joining...";
+
+        // 3. Establish the SignalR group connection
+        await connection.invoke("JoinAuction", auctionId);
+
+        // 4. Fetch the initial auction state from your API
+        const res = await fetch(`/auctions/${auctionId}`);
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        const auction = await res.json();
+
+        // 5. Update button text to reflect success
+        joinBtn.innerText = "Joined";
+
+        // 6. Append the initial status message
+        const li = document.createElement("li");
+        if (auction.isClosed) {
+            li.innerText =
+                `Auction already closed. Winner: ${auction.winnerId ?? "no bids"} | ` +
+                `Final bid: ${auction.currentHighestBid}`;
+        } else {
+            li.innerText =
+                `Auction active. Current highest bid: ${auction.currentHighestBid}`;
+        }
+        document.getElementById("events").appendChild(li);
+
+    } catch (e) {
+        console.error("Join failed:", e);
+        alert("Failed to join auction. Check console log for details.");
+        
+        // 7. Re-enable inputs if the process failed so the user can try again
+        joinBtn.disabled = false;
+        auctionIdInput.disabled = false;
+        joinBtn.innerText = "Join Auction";
+    }
+}
+    </script>
+</body>
+</html>

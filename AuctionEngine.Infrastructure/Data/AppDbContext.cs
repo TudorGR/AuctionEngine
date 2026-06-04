@@ -9,6 +9,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<AuctionItem> AuctionItems { get; set; }
     public DbSet<Bid> Bids { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     { }

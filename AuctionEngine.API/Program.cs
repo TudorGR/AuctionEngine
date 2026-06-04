@@ -1,9 +1,13 @@
 using System.Text;
+using AuctionEngine.API.Hubs;
+using AuctionEngine.API.Services;
 using AuctionEngine.Core.Entities;
+using AuctionEngine.Core.Interfaces;
 using AuctionEngine.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -38,6 +42,14 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddAuthorization();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration =
+        builder.Configuration.GetConnectionString("Redis");
+});
+builder.Services.AddScoped<IHighestBidCache, HighestBidCache>();
+builder.Services.AddSignalR();
+builder.Services.AddHostedService<AuctionCLoserService>();
 
 var app = builder.Build();
 
@@ -49,6 +61,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.MapHub<AuctionHub>("/hubs/auction");
 
 app.MapPost("/register", async (UserManager<ApplicationUser> UserManager, RegisterRequest request) =>
 {
@@ -66,7 +80,7 @@ app.MapPost("/register", async (UserManager<ApplicationUser> UserManager, Regist
 });
 
 
-app.MapPost("/login", async (UserManager<ApplicationUser> UserManager, RegisterRequest request) =>
+app.MapPost("/login", async (UserManager<ApplicationUser> UserManager, LoginRequest request) =>
 {
     var user = await UserManager.FindByEmailAsync(request.Email);
 
@@ -77,7 +91,7 @@ app.MapPost("/login", async (UserManager<ApplicationUser> UserManager, RegisterR
     if (!valid) return Results.Unauthorized();
 
     var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-    var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]!);
+    var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
     var tokenDescriptor = new SecurityTokenDescriptor
     {
         Subject = new System.Security.Claims.ClaimsIdentity(new[]
@@ -102,7 +116,13 @@ app.MapGet("/auctions", async (AppDbContext context) =>
     return Results.Ok(activeAuctions);
 });
 
-app.MapPost("/auctions", async (CreateAuctionRequest request, AppDbContext context, HttpContext httpContext) =>
+app.MapGet("/auctions/{id}", async (Guid id, AppDbContext context) =>
+{
+    var auction = await context.AuctionItems.FirstOrDefaultAsync(a => a.Id == id);
+    return Results.Ok(auction);
+});
+
+app.MapPost("/auctions", async (CreateAuctionRequest request, IHighestBidCache highestBidCache, AppDbContext context, HttpContext httpContext) =>
 {
     var userId = httpContext.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
@@ -115,19 +135,21 @@ app.MapPost("/auctions", async (CreateAuctionRequest request, AppDbContext conte
         Description = request.Description,
         StartingPrice = request.StartingPrice,
         CurrentHighestBid = request.StartingPrice,
-        EndTime = request.EndTime,
+        EndTime = request.EndTime.ToUniversalTime(),
         IsClosed = false,
         SellerId = userId
     };
 
     context.AuctionItems.Add(auction);
     await context.SaveChangesAsync();
+    await highestBidCache.SetHighestBidAsync(auction.Id, auction.CurrentHighestBid);
 
     return Results.Created($"/auctions/{auction.Id}", auction);
 }).RequireAuthorization();
 
-app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, AppDbContext context, HttpContext httpContext) =>
+app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, IHubContext<AuctionHub> hubContext, IHighestBidCache highestBidCache, AppDbContext context, HttpContext httpContext) =>
 {
+
     var userId = httpContext.User
         .FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)
         ?.Value;
@@ -140,6 +162,13 @@ app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, AppD
     if (auction is null)
         return Results.NotFound();
 
+    var highestBid = await highestBidCache.GetHighestBidAsync(id);
+    if (highestBid is null)
+    {
+        highestBid = auction.CurrentHighestBid;
+        await highestBidCache.SetHighestBidAsync(id, highestBid.Value);
+    }
+
     if (auction.IsClosed)
         return Results.BadRequest("Auction is closed");
 
@@ -151,8 +180,8 @@ app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, AppD
 
     if (request.Amount <= 0) return Results.BadRequest("Amount must be > 0");
 
-    if (request.Amount <= auction.CurrentHighestBid)
-        return Results.BadRequest($"Bid must be greater than {auction.CurrentHighestBid}");
+    if (request.Amount <= highestBid)
+        return Results.BadRequest($"Bid must be greater than {highestBid}");
 
     var bid = new Bid
     {
@@ -167,6 +196,12 @@ app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, AppD
     try
     {
         await context.SaveChangesAsync();
+        await highestBidCache.SetHighestBidAsync(id, request.Amount);
+        await hubContext.Clients.Group($"auction-{auction.Id}").SendAsync("NewBid", new BidPlacedEvent(
+            auction.Id,
+            bid.Amount,
+            bid.BidderId
+        ));
     }
     catch (DbUpdateConcurrencyException)
     {
@@ -180,9 +215,11 @@ app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, AppD
 
 app.UseHttpsRedirection();
 
+app.UseStaticFiles();
 
 app.Run();
 
 
 public record CreateAuctionRequest(string Title, string Description, decimal StartingPrice, DateTime EndTime);
 public record PlaceBidRequest(decimal Amount);
+public record BidPlacedEvent(Guid AuctionId, decimal Amount, string BidderId);
