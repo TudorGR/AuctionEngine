@@ -207,3 +207,11 @@
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/AuctionEngine.API.staticwebassets.runtime.json
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.Extensions.Caching.StackExchangeRedis.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Pipelines.Sockets.Unofficial.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/StackExchange.Redis.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Castle.Core.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/Moq.dll
+/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/bin/Debug/net10.0/runtimes/win/lib/net6.0/System.Diagnostics.EventLog.Messages.dll

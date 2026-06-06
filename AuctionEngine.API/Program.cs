@@ -3,18 +3,17 @@ using AuctionEngine.API.Hubs;
 using AuctionEngine.API.Services;
 using AuctionEngine.Core.Entities;
 using AuctionEngine.Core.Interfaces;
+using AuctionEngine.Core.Services;
 using AuctionEngine.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using AuctionEngine.Infrastructure.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
@@ -48,6 +47,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
         builder.Configuration.GetConnectionString("Redis");
 });
 builder.Services.AddScoped<IHighestBidCache, HighestBidCache>();
+builder.Services.AddScoped<IAuctionBidRepository, AuctionBidRepository>();
+builder.Services.AddScoped<IAuctionBidNotifier, SignalRAuctionBidNotifier>();
+builder.Services.AddScoped<AuctionBidService>();
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<AuctionCLoserService>();
 
@@ -56,7 +58,6 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -147,7 +148,7 @@ app.MapPost("/auctions", async (CreateAuctionRequest request, IHighestBidCache h
     return Results.Created($"/auctions/{auction.Id}", auction);
 }).RequireAuthorization();
 
-app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, IHubContext<AuctionHub> hubContext, IHighestBidCache highestBidCache, AppDbContext context, HttpContext httpContext) =>
+app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, AuctionBidService bidService, HttpContext httpContext) =>
 {
 
     var userId = httpContext.User
@@ -157,59 +158,17 @@ app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, IHub
     if (userId is null)
         return Results.Unauthorized();
 
-    var auction = await context.AuctionItems.FirstOrDefaultAsync(a => a.Id == id);
+    var result = await bidService.PlaceBidAsync(id, userId, request.Amount, httpContext.RequestAborted);
 
-    if (auction is null)
-        return Results.NotFound();
-
-    var highestBid = await highestBidCache.GetHighestBidAsync(id);
-    if (highestBid is null)
+    return result.Status switch
     {
-        highestBid = auction.CurrentHighestBid;
-        await highestBidCache.SetHighestBidAsync(id, highestBid.Value);
-    }
-
-    if (auction.IsClosed)
-        return Results.BadRequest("Auction is closed");
-
-    if (auction.EndTime <= DateTime.UtcNow)
-        return Results.BadRequest("Auction has expired");
-
-    if (auction.SellerId == userId)
-        return Results.BadRequest("You cannot bid on your own auction.");
-
-    if (request.Amount <= 0) return Results.BadRequest("Amount must be > 0");
-
-    if (request.Amount <= highestBid)
-        return Results.BadRequest($"Bid must be greater than {highestBid}");
-
-    var bid = new Bid
-    {
-        Id = Guid.NewGuid(),
-        Amount = request.Amount,
-        Timestamp = DateTime.UtcNow,
-        AuctionItemId = id,
-        BidderId = userId
+        BidPlacementStatus.Created => Results.Created($"/auctions/{id}/bids/{result.BidId}",
+            new { id = result.BidId, amount = result.Amount, timestamp = result.Timestamp }),
+        BidPlacementStatus.NotFound => Results.NotFound(),
+        BidPlacementStatus.BadRequest => Results.BadRequest(result.ErrorMessage),
+        BidPlacementStatus.Conflict => Results.Conflict(result.ErrorMessage),
+        _ => Results.StatusCode(StatusCodes.Status500InternalServerError)
     };
-    context.Bids.Add(bid);
-    auction.CurrentHighestBid = request.Amount;
-    try
-    {
-        await context.SaveChangesAsync();
-        await highestBidCache.SetHighestBidAsync(id, request.Amount);
-        await hubContext.Clients.Group($"auction-{auction.Id}").SendAsync("NewBid", new BidPlacedEvent(
-            auction.Id,
-            bid.Amount,
-            bid.BidderId
-        ));
-    }
-    catch (DbUpdateConcurrencyException)
-    {
-        return Results.Conflict("Another bid was placed simultaneously. Please try again.");
-    }
-
-    return Results.Created($"/auctions/{id}/bids/{bid.Id}",
-        new { id = bid.Id, amount = bid.Amount, timestamp = bid.Timestamp });
 }).RequireAuthorization();
 
 
@@ -222,4 +181,3 @@ app.Run();
 
 public record CreateAuctionRequest(string Title, string Description, decimal StartingPrice, DateTime EndTime);
 public record PlaceBidRequest(decimal Amount);
-public record BidPlacedEvent(Guid AuctionId, decimal Amount, string BidderId);
