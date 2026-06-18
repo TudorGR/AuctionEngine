@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: auctionengine-postgres
+    environment:
+      POSTGRES_DB: AuctionEngine
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: auctionengine-redis
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:

@@ -1,0 +1,137 @@
+<div class="container">
+  <h1>Auction Engine</h1>
+
+  <!-- Auth Section -->
+  @if (!auth.isLoggedIn) {
+    <section class="card">
+      <h2>{{ showLogin() ? 'Login' : 'Register' }}</h2>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" [value]="email()" (input)="email.set($any($event.target).value)" placeholder="your@email.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" [value]="password()" (input)="password.set($any($event.target).value)" placeholder="Password" />
+      </div>
+
+      @if (authError()) {
+        <div class="error">{{ authError() }}</div>
+      }
+
+      <div class="actions">
+        @if (showLogin()) {
+          <button (click)="login()" [disabled]="authLoading()">
+            {{ authLoading() ? 'Logging in...' : 'Login' }}
+          </button>
+        } @else {
+          <button (click)="register()" [disabled]="authLoading()">
+            {{ authLoading() ? 'Registering...' : 'Register' }}
+          </button>
+        }
+        <button class="link-btn" (click)="toggleForm()">
+          {{ showLogin() ? 'Need an account? Register' : 'Already have an account? Login' }}
+        </button>
+      </div>
+    </section>
+  }
+
+  <!-- Logged In Section -->
+  @if (auth.isLoggedIn) {
+    <div class="logged-in-bar">
+      <span>Logged in</span>
+      <button class="link-btn" (click)="logout()">Logout</button>
+    </div>
+
+    <!-- Create Auction -->
+    <section class="card">
+      <h2>Create Auction</h2>
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" type="text" [value]="title()" (input)="title.set($any($event.target).value)" placeholder="Auction title" />
+      </div>
+
+      <div class="form-group">
+        <label for="desc">Description</label>
+        <input id="desc" type="text" [value]="description()" (input)="description.set($any($event.target).value)" placeholder="Description" />
+      </div>
+
+      <div class="form-group">
+        <label for="price">Starting Price</label>
+        <input id="price" type="number" [value]="startingPrice()" (input)="startingPrice.set(toNumber($any($event.target).value))" placeholder="0" />
+      </div>
+
+      <div class="form-group">
+        <label for="endtime">End Time</label>
+        <input id="endtime" type="datetime-local" [value]="endTime()" (input)="endTime.set($any($event.target).value)" />
+      </div>
+
+      @if (createError()) {
+        <div class="error">{{ createError() }}</div>
+      }
+
+      <div class="actions">
+        <button (click)="createAuction()" [disabled]="createLoading()">
+          {{ createLoading() ? 'Creating...' : 'Create Auction' }}
+        </button>
+      </div>
+
+      @if (createdAuctionId()) {
+        <div class="success">Auction created! ID: <strong>{{ createdAuctionId() }}</strong></div>
+      }
+    </section>
+
+    <!-- Join / Bid -->
+    <section class="card">
+      <h2>Join & Bid</h2>
+
+      <div class="form-group">
+        <label for="auctionId">Auction ID (GUID)</label>
+        <input id="auctionId" type="text" [value]="auctionId()" (input)="auctionId.set($any($event.target).value)" placeholder="Enter Auction GUID" [disabled]="joined()" />
+      </div>
+
+      @if (!joined()) {
+        <div class="actions">
+          <button (click)="joinAuction()" [disabled]="joinLoading()">
+            {{ joinLoading() ? 'Joining...' : 'Join Auction' }}
+          </button>
+        </div>
+      }
+
+      @if (joined() && !auctionClosed()) {
+        <div class="form-group">
+          <label for="bidAmount">Bid Amount</label>
+          <input id="bidAmount" type="number" [value]="bidAmount()" (input)="bidAmount.set(toNumber($any($event.target).value))" placeholder="0" />
+        </div>
+
+        <div class="actions">
+          <button (click)="placeBid()" [disabled]="bidLoading()">
+            {{ bidLoading() ? 'Placing bid...' : 'Place Bid' }}
+          </button>
+        </div>
+      }
+
+      @if (joined()) {
+        <div class="info">Current highest bid: <strong>{{ currentHighestBid() }}</strong></div>
+      }
+
+      @if (bidError()) {
+        <div class="error">{{ bidError() }}</div>
+      }
+    </section>
+  }
+
+  <!-- Events Log -->
+  <section class="card events-card">
+    <h2>Events</h2>
+    <ul class="events-list">
+      @for (evt of events(); track evt.timestamp) {
+        <li>{{ evt.timestamp | date:'HH:mm:ss' }} — {{ evt.text }}</li>
+      } @empty {
+        <li class="empty">No events yet</li>
+      }
+    </ul>
+  </section>
+</div>

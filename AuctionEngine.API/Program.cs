@@ -50,11 +50,22 @@ builder.Services.AddScoped<IHighestBidCache, HighestBidCache>();
 builder.Services.AddScoped<IAuctionBidRepository, AuctionBidRepository>();
 builder.Services.AddScoped<IAuctionBidNotifier, SignalRAuctionBidNotifier>();
 builder.Services.AddScoped<AuctionBidService>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 builder.Services.AddSignalR();
 builder.Services.AddHostedService<AuctionCLoserService>();
 
 var app = builder.Build();
 
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 
