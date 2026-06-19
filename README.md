@@ -19,21 +19,21 @@ It supports:
 
 - `AuctionEngine.API`: Minimal API endpoints, authentication setup, SignalR hub, hosted auction closer, and static test page.
 - `AuctionEngine.Core`: Entities, service interfaces, bid validation, and bid placement service.
-- `AuctionEngine.Infrastructure`: EF Core `DbContext`, PostgreSQL repository, Redis highest-bid cache, and migrations.
+- `AuctionEngine.Infrastructure`: EF Core `DbContext`, SQL Server repository, Redis highest-bid cache, and migrations.
 - `AuctionEngine.Tests`: xUnit tests.
 
 ## Requirements
 
 - .NET SDK that supports `net10.0`.
-- PostgreSQL.
+- SQL Server.
 - Redis.
 
 The default local settings expect:
 
-- PostgreSQL at `localhost:5432`.
+- SQL Server at `localhost:1433`.
 - Database name: `AuctionEngine`.
-- PostgreSQL user: `postgres`.
-- PostgreSQL password: `postgres`.
+- SA user password: `YourStrong!Passw0rd`.
+- TrustServerCertificate enabled.
 - Redis at `localhost:6379`.
 
 ## Configuration
@@ -42,7 +42,7 @@ The database connection is in `AuctionEngine.API/appsettings.json`:
 
 ```json
 "ConnectionStrings": {
-  "DefaultConnection": "Server=localhost;Port=5432;Database=AuctionEngine;User Id=postgres;Password=postgres;"
+  "DefaultConnection": "Server=localhost;Database=AuctionEngine;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
 }
 ```
 
@@ -227,7 +227,7 @@ The tests cover bid validation and bid placement behavior.
 
 ## Notes
 
-- The API uses PostgreSQL through EF Core and Npgsql.
+- The API uses SQL Server through EF Core and `Microsoft.EntityFrameworkCore.SqlServer`.
 - Redis stores the highest bid value with a two-hour absolute expiration.
 - `CurrentHighestBid` is configured as an EF Core concurrency token.
 - The repository includes `test_concurrency.sh`, but it contains a hard-coded token and auction id. Update those values before using it locally.
