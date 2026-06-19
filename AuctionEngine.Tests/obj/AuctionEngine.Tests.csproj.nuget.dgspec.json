@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/AuctionEngine.Tests.csproj": {}
+    "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Tests\\AuctionEngine.Tests.csproj": {}
   },
   "projects": {
-    "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.API/AuctionEngine.API.csproj": {
+    "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.API\\AuctionEngine.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.API/AuctionEngine.API.csproj",
+        "projectUniqueName": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.API\\AuctionEngine.API.csproj",
         "projectName": "AuctionEngine.API",
-        "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.API/AuctionEngine.API.csproj",
-        "packagesPath": "/Users/tudorgradinaru/.nuget/packages/",
-        "outputPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.API/obj/",
+        "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.API\\AuctionEngine.API.csproj",
+        "packagesPath": "C:\\Users\\tudor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/tudorgradinaru/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tudor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -27,11 +27,11 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj": {
-                "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj"
+              "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj": {
+                "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj"
               },
-              "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj": {
-                "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj"
+              "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\AuctionEngine.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\AuctionEngine.Infrastructure.csproj"
               }
             }
           }
@@ -81,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
@@ -499,17 +499,17 @@
         }
       }
     },
-    "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj": {
+    "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj",
+        "projectUniqueName": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj",
         "projectName": "AuctionEngine.Core",
-        "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj",
-        "packagesPath": "/Users/tudorgradinaru/.nuget/packages/",
-        "outputPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/",
+        "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj",
+        "packagesPath": "C:\\Users\\tudor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/tudorgradinaru/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tudor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -562,7 +562,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -840,17 +840,17 @@
         }
       }
     },
-    "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj": {
+    "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\AuctionEngine.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\AuctionEngine.Infrastructure.csproj",
         "projectName": "AuctionEngine.Infrastructure",
-        "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj",
-        "packagesPath": "/Users/tudorgradinaru/.nuget/packages/",
-        "outputPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/obj/",
+        "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\AuctionEngine.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\tudor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/tudorgradinaru/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tudor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -863,8 +863,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj": {
-                "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj"
+              "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj": {
+                "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj"
               }
             }
           }
@@ -898,6 +898,10 @@
               "target": "Package",
               "version": "[10.0.8, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[10.0.8, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[10.0.8, )"
@@ -905,10 +909,6 @@
             "Microsoft.Extensions.Caching.StackExchangeRedis": {
               "target": "Package",
               "version": "[10.0.8, )"
-            },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[10.0.2, )"
             }
           },
           "imports": [
@@ -927,7 +927,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1205,17 +1205,17 @@
         }
       }
     },
-    "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/AuctionEngine.Tests.csproj": {
+    "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Tests\\AuctionEngine.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/AuctionEngine.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Tests\\AuctionEngine.Tests.csproj",
         "projectName": "AuctionEngine.Tests",
-        "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/AuctionEngine.Tests.csproj",
-        "packagesPath": "/Users/tudorgradinaru/.nuget/packages/",
-        "outputPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Tests/obj/",
+        "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Tests\\AuctionEngine.Tests.csproj",
+        "packagesPath": "C:\\Users\\tudor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/tudorgradinaru/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tudor\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -1228,14 +1228,14 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.API/AuctionEngine.API.csproj": {
-                "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.API/AuctionEngine.API.csproj"
+              "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.API\\AuctionEngine.API.csproj": {
+                "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.API\\AuctionEngine.API.csproj"
               },
-              "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj": {
-                "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/AuctionEngine.Core.csproj"
+              "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj": {
+                "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Core\\AuctionEngine.Core.csproj"
               },
-              "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj": {
-                "projectPath": "/Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Infrastructure/AuctionEngine.Infrastructure.csproj"
+              "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\AuctionEngine.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\tudor\\Documents\\AuctionEngine\\AuctionEngine.Infrastructure\\AuctionEngine.Infrastructure.csproj"
               }
             }
           }
@@ -1304,7 +1304,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.300/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

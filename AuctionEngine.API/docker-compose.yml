@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:16
-    container_name: auctionengine-postgres
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: auctionengine-sqlserver
     environment:
-      POSTGRES_DB: AuctionEngine
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      MSSQL_DB: AuctionEngine
     ports:
-      - "5432:5432"
+      - "1433:1433"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - sqlserver_data:/var/opt/mssql
 
   redis:
     image: redis:7
@@ -20,4 +20,4 @@ services:
       - "6379:6379"
 
 volumes:
-  postgres_data:
+  sqlserver_data:

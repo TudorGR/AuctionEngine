@@ -11,3 +11,16 @@
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/Debug/net10.0/ref/AuctionEngine.Core.dll
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/Debug/net10.0/AuctionEngine.Core.sourcelink.json
 /Users/tudorgradinaru/Desktop/AuctionEngine/AuctionEngine.Core/obj/Debug/net10.0/AuctionEngine.Core.csproj.AssemblyReference.cache
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\bin\Debug\net10.0\AuctionEngine.Core.deps.json
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\bin\Debug\net10.0\AuctionEngine.Core.dll
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\bin\Debug\net10.0\AuctionEngine.Core.pdb
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.csproj.AssemblyReference.cache
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.AssemblyInfoInputs.cache
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.AssemblyInfo.cs
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.csproj.CoreCompileInputs.cache
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.sourcelink.json
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.dll
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\refint\AuctionEngine.Core.dll
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\AuctionEngine.Core.pdb
+C:\Users\tudor\Documents\AuctionEngine\AuctionEngine.Core\obj\Debug\net10.0\ref\AuctionEngine.Core.dll

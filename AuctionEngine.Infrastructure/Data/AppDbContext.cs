@@ -38,6 +38,19 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
         modelBuilder.Entity<AuctionItem>()
         .Property(a => a.CurrentHighestBid)
+        .HasPrecision(18, 2)
         .IsConcurrencyToken();
+
+        modelBuilder.Entity<AuctionItem>()
+        .Property(a => a.StartingPrice)
+        .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Bid>()
+        .Property(b => b.Amount)
+        .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Invoice>()
+        .Property(i => i.Amount)
+        .HasPrecision(18, 2);
     }
 }
