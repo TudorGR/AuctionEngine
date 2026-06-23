@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AuctionEngine.Infrastructure.Data.Repositories;
 using AuctionEngine.Core.DTOs;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,17 +97,99 @@ app.MapPost("/login", async (IAuthService authService, LoginRequest request) =>
         : Results.Unauthorized();
 });
 
-app.MapGet("/auctions", async (AppDbContext context) =>
+app.MapGet("/auctions", async (AppDbContext context, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery] string? search = null, [FromQuery] string status = "active") =>
 {
-    var activeAuctions = await context.AuctionItems.Where(a => !a.IsClosed).ToListAsync();
-    return Results.Ok(activeAuctions);
+    pageSize = Math.Clamp(pageSize, 1, 100);
+    page = Math.Max(1, page);
+
+    var query = context.AuctionItems.AsNoTracking();
+
+    if (status == "active")
+        query = query.Where(a => !a.IsClosed);
+    else if (status == "closed")
+        query = query.Where(a => a.IsClosed);
+
+    if (!string.IsNullOrWhiteSpace(search))
+        query = query.Where(a => EF.Functions.Like(a.Title, $"%{search}%"));
+
+    var totalCount = await query.CountAsync();
+
+    var items = await query
+    .Skip((page - 1) * pageSize)
+    .Take(pageSize)
+    .Select(a => new AuctionListItemDto
+    {
+        Id = a.Id,
+        Title = a.Title,
+        StartingPrice = a.StartingPrice,
+        CurrentHighestBid = a.CurrentHighestBid,
+        EndTime = a.EndTime,
+        IsClosed = a.IsClosed,
+        SellerName = a.Seller.UserName ?? a.Seller.Email!
+    })
+    .ToListAsync();
+
+    var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+    return Results.Ok(new PaginatedResponse<AuctionListItemDto>(items, page, pageSize, totalCount, totalPages));
 });
+
+app.MapGet("/auctions/mine", async (AppDbContext context, ClaimsPrincipal user,
+    [FromQuery] int page = 1, [FromQuery] int pageSize = 20) =>
+{
+    var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    if (userId is null) return Results.Unauthorized();
+
+    pageSize = Math.Clamp(pageSize, 1, 100);
+    page = Math.Max(1, page);
+
+    var query = context.AuctionItems
+        .AsNoTracking()
+        .Where(a => a.SellerId == userId);
+
+    var totalCount = await query.CountAsync();
+    var items = await query
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .Select(a => new AuctionListItemDto
+        {
+            Id = a.Id,
+            Title = a.Title,
+            StartingPrice = a.StartingPrice,
+            CurrentHighestBid = a.CurrentHighestBid,
+            EndTime = a.EndTime,
+            IsClosed = a.IsClosed,
+            SellerName = a.Seller.UserName ?? a.Seller.Email!
+        })
+        .ToListAsync();
+
+    return Results.Ok(new PaginatedResponse<AuctionListItemDto>(
+        items, page, pageSize, totalCount, (int)Math.Ceiling(totalCount / (double)pageSize)));
+}).RequireAuthorization();
+
 
 app.MapGet("/auctions/{id}", async (Guid id, AppDbContext context) =>
 {
-    var auction = await context.AuctionItems.FirstOrDefaultAsync(a => a.Id == id);
-    return Results.Ok(auction);
+    var auction = await context.AuctionItems
+        .AsNoTracking()
+        .Where(a => a.Id == id)
+        .Select(a => new AuctionDetailDto
+        {
+            Id = a.Id,
+            Title = a.Title,
+            Description = a.Description,
+            StartingPrice = a.StartingPrice,
+            CurrentHighestBid = a.CurrentHighestBid,
+            EndTime = a.EndTime,
+            IsClosed = a.IsClosed,
+            SellerName = a.Seller.UserName ?? a.Seller.Email!,
+            BidCount = a.Bids.Count
+        })
+        .FirstOrDefaultAsync();
+
+    return auction is null ? Results.NotFound() : Results.Ok(auction);
 });
+
 
 app.MapPost("/auctions", async (CreateAuctionRequest request, IHighestBidCache highestBidCache, AppDbContext context, HttpContext httpContext) =>
 {

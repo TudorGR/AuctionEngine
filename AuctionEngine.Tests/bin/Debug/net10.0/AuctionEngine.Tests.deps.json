@@ -1176,6 +1176,7 @@
       },
       "AuctionEngine.Core/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "10.0.8",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "10.0.8"
         },
         "runtime": {
