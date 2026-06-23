@@ -6,11 +6,10 @@ using AuctionEngine.Core.Interfaces;
 using AuctionEngine.Core.Services;
 using AuctionEngine.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using AuctionEngine.Infrastructure.Data.Repositories;
+using AuctionEngine.Core.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +45,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration =
         builder.Configuration.GetConnectionString("Redis");
 });
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IHighestBidCache, HighestBidCache>();
 builder.Services.AddScoped<IAuctionBidRepository, AuctionBidRepository>();
 builder.Services.AddScoped<IAuctionBidNotifier, SignalRAuctionBidNotifier>();
@@ -76,50 +76,23 @@ if (app.Environment.IsDevelopment())
 
 app.MapHub<AuctionHub>("/hubs/auction");
 
-app.MapPost("/register", async (UserManager<ApplicationUser> UserManager, RegisterRequest request) =>
+app.MapPost("/register", async (IAuthService authService, RegisterRequest request) =>
 {
-    var user = new ApplicationUser
-    {
-        UserName = request.Email,
-        Email = request.Email
-    };
+    var result = await authService.RegisterAsync(request);
 
-    var result = await UserManager.CreateAsync(user, request.Password);
-
-    if (!result.Succeeded) return Results.BadRequest(result.Errors);
-
-    return Results.Ok();
+    return result.Success
+        ? Results.Ok()
+        : Results.BadRequest(result.Error);
 });
 
 
-app.MapPost("/login", async (UserManager<ApplicationUser> UserManager, LoginRequest request) =>
+app.MapPost("/login", async (IAuthService authService, LoginRequest request) =>
 {
-    var user = await UserManager.FindByEmailAsync(request.Email);
+    var result = await authService.LoginAsync(request);
 
-    if (user == null) return Results.Unauthorized();
-
-    var valid = await UserManager.CheckPasswordAsync(user, request.Password);
-
-    if (!valid) return Results.Unauthorized();
-
-    var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
-    var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
-    var tokenDescriptor = new SecurityTokenDescriptor
-    {
-        Subject = new System.Security.Claims.ClaimsIdentity(new[]
-        {
-        new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.NameIdentifier, user.Id),
-        new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Email, user.Email!)
-    }),
-        Expires = DateTime.UtcNow.AddHours(1),
-        Issuer = builder.Configuration["Jwt:Issuer"],
-        Audience = builder.Configuration["Jwt:Audience"],
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-    };
-    var token = tokenHandler.CreateToken(tokenDescriptor);
-    var tokenString = tokenHandler.WriteToken(token);
-
-    return Results.Ok(new { token = tokenString });
+    return result.Success
+        ? Results.Ok(new { token = result.Token })
+        : Results.Unauthorized();
 });
 
 app.MapGet("/auctions", async (AppDbContext context) =>
