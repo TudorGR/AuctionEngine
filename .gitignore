@@ -6,11 +6,11 @@
 *.sln.docstates
 
 # Build outputs
-bin/
-obj/
-Debug/
-Release/
-publish/
+bin
+obj
+Debug
+Release
+publish
 
 # Rider
 .idea/

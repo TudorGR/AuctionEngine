@@ -43,7 +43,7 @@ public class AuctionCLoserService : BackgroundService
         }
     }
 
-    private async Task CloseExpiredAuctionsAsync(CancellationToken ct)
+    public async Task CloseExpiredAuctionsAsync(CancellationToken ct)
     {
         using var scope = _scopeFactory.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

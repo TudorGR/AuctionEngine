@@ -52,5 +52,17 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<Invoice>()
         .Property(i => i.Amount)
         .HasPrecision(18, 2);
+
+        modelBuilder.Entity<Invoice>()
+        .HasOne(b => b.Auction)
+        .WithMany()
+        .HasForeignKey(i => i.AuctionId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Invoice>()
+        .HasOne(i => i.Winner)
+        .WithMany()
+        .HasForeignKey(i => i.WinnerId)
+        .OnDelete(DeleteBehavior.Restrict);
     }
 }

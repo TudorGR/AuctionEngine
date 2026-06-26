@@ -239,6 +239,47 @@ app.MapPost("/auctions/{id}/bids", async (Guid id, PlaceBidRequest request, Auct
     };
 }).RequireAuthorization();
 
+app.MapGet("/invoices", async (AppDbContext context, HttpContext httpContext) =>
+{
+    var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+    var invoices = await context.Invoices.Where(a => a.WinnerId == userId).OrderByDescending(a => a.CreatedAt).Select(a => new InvoiceDto
+    {
+        Id = a.Id,
+        AuctionId = a.AuctionId,
+        AuctionTitle = a.Auction.Title,
+        Amount = a.Amount,
+        CreatedAt = a.CreatedAt,
+        IsPaid = a.IsPaid
+    }).ToListAsync();
+
+    return Results.Ok(invoices);
+}).RequireAuthorization();
+
+app.MapGet("/invoices/{id}", async (Guid id, AppDbContext context, HttpContext httpContext) =>
+{
+    var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+    var invoice = await context.Invoices.Include(i => i.Auction).FirstOrDefaultAsync(a => a.Id == id);
+
+    if (invoice is null)
+        return Results.NotFound();
+
+    if (userId != invoice.WinnerId)
+        return Results.Forbid();
+
+    var result = new InvoiceDto
+    {
+        Id = invoice.Id,
+        AuctionId = invoice.AuctionId,
+        AuctionTitle = invoice.Auction.Title,
+        Amount = invoice.Amount,
+        CreatedAt = invoice.CreatedAt,
+        IsPaid = invoice.IsPaid
+    };
+
+    return Results.Ok(result);
+}).RequireAuthorization();
 
 app.UseHttpsRedirection();
 
